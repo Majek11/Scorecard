@@ -1,78 +1,36 @@
 import React from 'react'
-import { useState } from 'react'
-import { BiChevronDown } from 'react-icons/bi'
+import { useState, useEffect } from 'react'
+import { IoMdArrowDropdown } from 'react-icons/io'
 
 const DropDown = ({selected, setSelected, options, title}) => {
     
 
     const [isActive, setIsActive] = useState(false);
-    // const option = ['React', 'Vue', 'Angular']
-    // const option1 = ['React', 'Vue', 'Angular']
+    const [selectedOption, setSelectedOption] = useState(selected.label)
+    
+    useEffect(() => {
+        if (selected)
+            setSelected(selected)
+    }, []) 
   return (
-    <div>
-        <div className="dropdown w-[180px] mx-[100px] my-auto relative select-none">
-            <div className="dropdown-btn px-4 py-2 bg-gray-200 border-[1px] border-[#d1d0d0] font-bold text-[#333] flex items-center justify-between cursor-pointer" onClick={(e) => setIsActive(!isActive)}>
-                {title}
-                <BiChevronDown size={25} />
+    <div className='pl-[230px]'>
+        <div className="dropdown w-[220px] my-auto -mx-14 relative select-none">
+            <div className='dropdown-btn px-3.5 py-5 bg-gray-200 border-[1px] border-[#b3b3b3] font-[800] font-["Nunito_Sans"] text-[#828282] flex items-center justify-between cursor-pointer text-[14px]' onClick={(e) => setIsActive(!isActive)}>
+                {selectedOption}
+                <IoMdArrowDropdown size={22} />
             </div>
             {isActive && (
-                <div className="dropdown-content absolute top-[110%] p-[10px]  left-0 bg-[#f0f6f6] font-bold text-[#333] w-[100%] border-[1px] border-[#e5e5e5] rounded-[10px] cursor-pointer">
-                    {options.map((option) => (
-                <div onClick={(e) => {
-                    setSelected (option)
-                    setIsActive(false)
-                }
-                    
-                    } className="dropdown-item p-[10px] hover:bg-[#f1eeee] transition-all ">
-                    {option}
-                </div>
-
-                    ))}
+                <div className="dropdown-content absolute top-[110%] z-10 p-[10px] left-0 bg-[#fff] font-bold text-[#333] w-[100%] border-[1px] border-[#e5e5e5] rounded-[10px] cursor-pointer">
+                    {
+                        options.map((option, index) => (
+                            <div key={index} onClick={(e) => { setSelected (option); setSelectedOption(option.label); setIsActive(false) }} className="dropdown-item p-[10px]  hover:bg-[#f1eeee] transition-all ">
+                                {option.label}
+                            </div>
+                        ))
+                    }
                 </div>
             )}
     </div>
-        <div className="dropdown w-[180px] mx-[100px] my-auto relative select-none">
-            <div className="dropdown-btn px-4 py-2 bg-gray-200 border-[1px] border-[#d1d0d0] font-bold text-[#333] flex items-center justify-between cursor-pointer" onClick={(e) => setIsActive(!isActive)}>
-                {selected}
-                <BiChevronDown size={25} />
-            </div>
-            {isActive && (
-                <div className="dropdown-content absolute top-[110%] p-[10px]  left-0 bg-[#f0f6f6] font-bold text-[#333] w-[100%] border-[1px] border-[#e5e5e5] rounded-[10px] cursor-pointer">
-                    {options.map((option1) => (
-                <div onClick={(e) => {
-                    setSelected (option1)
-                    setIsActive(false)
-                }
-                    
-                    } className="dropdown-item p-[10px] hover:bg-[#f1eeee] transition-all ">
-                    {option1}
-                </div>
-
-                    ))}
-                </div>
-            )}
-    </div>
-        {/* <div className="dropdown w-[180px] mx-[100px] my-auto relative select-none">
-            <div className="dropdown-btn px-4 py-2 bg-gray-200 border-[1px] border-[#d1d0d0] font-bold text-[#333] flex items-center justify-between cursor-pointer" onClick={(e) => setIsActive(!isActive)}>
-                {selected} 
-                <BiChevronDown size={25} />
-            </div>
-            {isActive && (
-                <div className="dropdown-content absolute top-[110%] p-[10px]  left-0 bg-[#f0f6f6] font-bold text-[#333] w-[100%] border-[1px] border-[#e5e5e5] rounded-[10px] cursor-pointer">
-                    {option.map((option) => (
-                <div onClick={(e) => {
-                    setSelected (option1)
-                    setIsActive(false)
-                }
-                    
-                    } className="dropdown-item p-[10px] hover:bg-[#f1eeee] transition-all ">
-                    {option1}
-                </div>
-
-                    ))}
-                </div>
-            )}
-    </div> */}
     </div>
   )
 }
